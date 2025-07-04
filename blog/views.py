@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib import messages
 from django.views import View
 from .forms import PostForm
 from .models import Post
@@ -31,6 +32,7 @@ class BlogCreateView(View):
                     title=titulo,
                     content=contenido
                 )
+                messages.success(request, 'El post se envió correctamente.')
                 return redirect('blog:blog_list')
 
         # Si el formulario no es válido, se vuelve a mostrar el formulario con los errores
@@ -66,6 +68,7 @@ class BlogUpdateView(View):
 
         if form.is_valid():
             form.save()
+            messages.info(request, 'El post se actualizó correctamente.')
             return redirect('blog:blog_list')
 
         context = {
@@ -79,4 +82,5 @@ class BlogDeleteView(View):
         post = get_object_or_404(Post, pk=pk)
         post.status = False
         post.save()
+        messages.warning(request, 'El post se eliminó correctamente.')
         return redirect('blog:blog_list')
