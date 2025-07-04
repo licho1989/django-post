@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar%}
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="/"></a>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block section %}
+    <div class="container mt-5 mb-15">
+        <br>
+        <br>
+        <br>
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Crear Post</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <form method="post" action="{% if post.pk %}{% url 'blog:blog_update' post.pk %}{% else %}{% url 'blog:blog_create' %}{% endif %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary center">{% if post.pk %}Actualizar{% else %}Crear Post{% endif %}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
